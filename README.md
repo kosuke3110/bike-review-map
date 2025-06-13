@@ -108,6 +108,12 @@ Google Maps単体と比較すると、「自転車専門店」の絞り込み＋
 
 https://www.figma.com/design/1zSAEAHLbT2t7YmMSZzw8A/%E8%87%AA%E8%BB%A2%E8%BB%8A%E5%BA%97%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E3%82%A2%E3%83%97%E3%83%AA?node-id=1-19&p=f&t=12sVQ1uUesx5Zwrf-0
 
+## ■ ER図
+
+[![Image from Gyazo](https://i.gyazo.com/4d413fb6d8aa1a8eec449282e6a860ca.png)](https://gyazo.com/4d413fb6d8aa1a8eec449282e6a860ca)
+https://i.gyazo.com/4d413fb6d8aa1a8eec449282e6a860ca.png
+
+
 # How to Setup
 
 `git checkout -b bugfix`  
