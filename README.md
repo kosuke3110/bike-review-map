@@ -110,8 +110,9 @@ https://www.figma.com/design/1zSAEAHLbT2t7YmMSZzw8A/%E8%87%AA%E8%BB%A2%E8%BB%8A%
 
 ## ■ ER図
 
-https://i.gyazo.com/c91d44dbeef4a11f74b0b365e8c3c67d.png
-[![Image from Gyazo](https://i.gyazo.com/c91d44dbeef4a11f74b0b365e8c3c67d.png)](https://gyazo.com/c91d44dbeef4a11f74b0b365e8c3c67d)
+[![Image from Gyazo](https://i.gyazo.com/4d413fb6d8aa1a8eec449282e6a860ca.png)](https://gyazo.com/4d413fb6d8aa1a8eec449282e6a860ca)
+https://i.gyazo.com/4d413fb6d8aa1a8eec449282e6a860ca.png
+
 
 # How to Setup
 
