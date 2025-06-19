@@ -28,6 +28,9 @@ RUN yarn install
 # アプリ全体をコピー（controllers, models, views など）
 COPY . .
 
+# Tailwind の CSS を本番用にビルド
+RUN yarn build:css
+
 # assets プリコンパイル
 RUN bundle exec rails assets:precompile
 
