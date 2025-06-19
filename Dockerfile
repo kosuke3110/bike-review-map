@@ -1,4 +1,4 @@
-FROM ruby:3.1.4
+FROM ruby:3.1.3
 
 ENV LANG C.UTF-8
 ENV TZ Asia/Tokyo
@@ -8,7 +8,7 @@ RUN curl -sL https://deb.nodesource.com/setup_19.x | bash - \
   && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /usr/share/keyrings/yarnkey.gpg \
   && echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
   && apt-get update -qq \
-  && apt-get install -y build-essential libpq-dev nodejs yarn
+  && apt-get install -y build-essential libpq-dev nodejs yarn libjemalloc2
 
 # アプリケーション用ディレクトリ作成
 RUN mkdir /rails
@@ -17,14 +17,57 @@ WORKDIR /rails
 # bundler インストール
 RUN gem install bundler
 
-# Gemfileとyarn.lockを先にコピー（キャッシュ活用）
+# Gemfile 関連を先にコピーして bundle install（キャッシュ効かせる）
 COPY Gemfile Gemfile.lock ./
-COPY yarn.lock ./
 RUN bundle install
+
+# ✅ package.json と yarn.lock をコピー（順番重要）
+COPY package.json yarn.lock ./
 RUN yarn install
 
-# アプリ全体をコピー
+# アプリ全体をコピー（controllers, models, views など）
 COPY . .
+
+# assets プリコンパイル
+RUN bundle exec rails assets:precompile
+
+# Rails サーバー起動コマンド
+CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000} -e production"]
+
+
+# FROM ruby:3.1.3
+
+# ENV LANG C.UTF-8
+# ENV TZ Asia/Tokyo
+
+# # Node.js & Yarn インストール
+# RUN curl -sL https://deb.nodesource.com/setup_19.x | bash - \
+#   && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /usr/share/keyrings/yarnkey.gpg \
+#   && echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+#   && apt-get update -qq \
+#   && apt-get install -y build-essential libpq-dev nodejs yarn libjemalloc2
+
+# # アプリケーション用ディレクトリ作成
+# RUN mkdir /rails
+# WORKDIR /rails
+
+# # bundler インストール
+# RUN gem install bundler
+
+# # Gemfileとyarn.lockを先にコピー（キャッシュ活用）
+# COPY Gemfile Gemfile.lock ./
+# COPY yarn.lock ./
+# RUN bundle install
+# RUN yarn install
+
+# # アプリ全体をコピー
+# COPY . .
+# # assetsプリコンパイル
+# RUN bundle exec rails assets:precompile
+
+# # Rails サーバー起動コマンド追加
+# # 例：Railsサーバーを0.0.0.0で起動するように修正
+# CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000} -e production"]
 
 # # syntax = docker/dockerfile:1
 

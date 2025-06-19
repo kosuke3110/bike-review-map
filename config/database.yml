@@ -15,10 +15,13 @@ test:
   database: bike_review_map_test
 
 production:
-  <<: *default
-  database: bike_review_map_production
-  username: <%= ENV["DATABASE_USERNAME"] || "bike_review_map" %>
-  password: <%= ENV["BIKE_REVIEW_MAP_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+  # <<: *default
+  # database: bike_review_map_production
+  # username: <%= ENV["DATABASE_USERNAME"] || "bike_review_map" %>
+  # password: <%= ENV["BIKE_REVIEW_MAP_DATABASE_PASSWORD"] %>
 
 # # PostgreSQL. Versions 9.3 and up are supported.
 # #
