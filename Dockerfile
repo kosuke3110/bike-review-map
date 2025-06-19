@@ -31,8 +31,10 @@ COPY . .
 # assets プリコンパイル
 RUN bundle exec rails assets:precompile
 
-# Rails サーバー起動コマンド
+# Rails サーバー起動コマンド（動作する）
 CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000} -e production"]
+
+# CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0 -p 3000 -e production"]
 
 
 # FROM ruby:3.1.3

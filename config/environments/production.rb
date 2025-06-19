@@ -89,6 +89,8 @@ Rails.application.configure do
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts << "bike-review-map.fly.dev"
+  # config.hosts << /.*\.fly\.dev/
+  # config.hosts << /.*\.internal/
   config.hosts.clear
   # config.hosts << "66.241.124.188"  # Fly.io が割り当てた IPv4 アドレス
   # config.hosts << /.*\.fly\.dev/    # サブドメイン対応
