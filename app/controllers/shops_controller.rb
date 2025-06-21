@@ -1,4 +1,5 @@
 class ShopsController < ApplicationController
+  layout 'application'
   def search
     # フォーム画面表示
   end
