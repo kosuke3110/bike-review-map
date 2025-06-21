@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: 'home#top'
   get 'home/top'
+  get 'home/map_test'
   # get '/up', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
