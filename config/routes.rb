@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  get 'shops/search'
+  get 'shops/result'
   root to: 'home#top'
   get 'home/top'
   get 'home/map_test'
+  get 'shops/search', to: 'shops#search', as: :search_shops
+  get 'shops/result', to: 'shops#result', as: :result_shops
+
   # get '/up', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
