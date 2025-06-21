@@ -72,3 +72,6 @@ group :test do
 end
 
 gem "dockerfile-rails", ">= 1.7", :group => :development
+
+# .env の読み込み
+gem "dotenv-rails"
