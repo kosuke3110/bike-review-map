@@ -2,31 +2,39 @@
 <div class="max-w-xl mx-auto mt-12 p-6 bg-white rounded-xl shadow-md space-y-4">
   <h1 class="text-xl font-bold text-center">自転車店を検索</h1>
 
+  <!-- GETメソッドでresult_shops_pathに送信 -->
   <%= form_with url: result_shops_path, method: :get, local: true do |f| %>
+    <!-- 住所入力 -->
     <div>
       <%= f.label :address, "住所を入力", class: "block font-semibold" %>
-      <%= f.text_field :address, class: "w-full p-2 border rounded" %>
+      <%= f.text_field :address, class: "w-full p-2 border rounded", id: "address-input" %>
     </div>
 
+    <!-- ボタンエリア -->
     <div class="flex justify-between mt-4">
-      <button type="button" onclick="getCurrentLocation()" class="bg-green-500 hover:bg-green-600 text-brack py-2 px-4 rounded">
+      <!-- 現在地取得ボタン -->
+      <button type="button" onclick="getCurrentLocation()" class="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded">
         現在地から探す
       </button>
 
-      <%= f.submit "検索", class: "bg-blue-500 hover:bg-blue-600 text-brack py-2 px-4 rounded" %>
+      <!-- フォーム送信ボタン -->
+      <%= f.submit "検索", class: "bg-blue-500 hover:bg-blue-600 text-black py-2 px-4 rounded" %>
     </div>
 
-    <%= hidden_field_tag :lat %>
-    <%= hidden_field_tag :lng %>
+    <!-- 非表示の緯度・経度フィールド -->
+    <%= hidden_field_tag :lat, "", id: "lat-field" %>
+    <%= hidden_field_tag :lng, "", id: "lng-field" %>
   <% end %>
 </div>
 
+<!-- JavaScript -->
 <script>
+  // 現在地を取得して緯度経度をhiddenフィールドに代入
   function getCurrentLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        document.querySelector('input[name="lat"]').value = position.coords.latitude;
-        document.querySelector('input[name="lng"]').value = position.coords.longitude;
+        document.getElementById('lat-field').value = position.coords.latitude;
+        document.getElementById('lng-field').value = position.coords.longitude;
       }, function() {
         alert("位置情報の取得に失敗しました。");
       });
@@ -34,8 +42,18 @@
       alert("お使いのブラウザでは位置情報取得がサポートされていません。");
     }
   }
+
+  // 住所を入力したら、緯度経度をリセットする（優先順位を住所にする）
+  document.addEventListener('DOMContentLoaded', () => {
+    const addressInput = document.getElementById('address-input');
+    addressInput.addEventListener('input', () => {
+      document.getElementById('lat-field').value = "";
+      document.getElementById('lng-field').value = "";
+    });
+  });
 </script>
 
-<div>
-  <%= link_to '戻る', root_path %>
+<!-- トップに戻るリンク -->
+<div class="mt-6 text-center">
+  <%= link_to '戻る', root_path, class: "text-blue-600 underline" %>
 </div>

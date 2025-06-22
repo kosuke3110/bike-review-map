@@ -1,3 +1,4 @@
+
 <div class="max-w-3xl mx-auto mt-12">
   <h2 class="text-2xl font-bold mb-4">検索結果</h2>
 
@@ -6,12 +7,12 @@
       <div class="p-4 mb-4 bg-white rounded shadow">
         <p class="text-lg font-semibold"><%= shop[:name] %></p>
         <p class="text-gray-600"><%= shop[:address] %></p>
+        <% if shop[:rating] %>
+          <p>評価: <%= shop[:rating] %> ⭐</p>
+        <% end %>
       </div>
     <% end %>
   <% else %>
     <p>店舗が見つかりませんでした。</p>
   <% end %>
-  <div>
-    <%= link_to '戻る', root_path %>
-  </div>
 </div>
