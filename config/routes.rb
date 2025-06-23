@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  get 'shops/search'
-  get 'shops/result'
+  devise_for :users
+  # get 'shops/search'
+  # get 'shops/result'
   root to: 'home#top'
   get 'home/top'
   get 'home/map_test'

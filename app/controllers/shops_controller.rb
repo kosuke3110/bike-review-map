@@ -5,6 +5,7 @@ require 'erb'
 
 class ShopsController < ApplicationController
 
+  # 住所 → 緯度経度に変換
   def geocode_address(address)
     api_key = ENV['GOOGLE_MAPS_API_KEY']
     encoded_address = ERB::Util.url_encode(address)
@@ -26,6 +27,7 @@ class ShopsController < ApplicationController
   end
   
 
+  # 緯度経度 → 自転車店検索
   def search_bike_shops(location)
     api_key = ENV['GOOGLE_MAPS_API_KEY']
     keyword = ERB::Util.url_encode("自転車")
