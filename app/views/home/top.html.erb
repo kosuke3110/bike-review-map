@@ -1,23 +1,13 @@
 <!-- app/views/homes/top.html.erb -->
 <div class="bg-white text-gray-800">
 
-  <!-- Header（追加） -->
-  <header class="bg-gray-900 text-white py-4 px-6 flex justify-between items-center shadow-md">
-    <div class="text-2xl font-bold">🚲 Bike Review Map</div>
-    <nav class="space-x-4 text-sm">
-      <%= link_to '検索', search_shops_path, class: "hover:underline" %>
-      <%= link_to '新規登録', 'new_user_registration_path', class: "hover:underline" %>
-      <%= link_to 'ログイン', 'new_user_session_path', class: "hover:underline" %>
-    </nav>
-  </header>
-
   <!-- Hero Section -->
   <section class="bg-gradient-to-r from-blue-500 via-green-400 to-teal-400 text-white text-center py-20 px-6">
     <h1 class="text-5xl font-extrabold drop-shadow mb-6">あなたにぴったりの<br class="md:hidden">自転車店を探そう！</h1>
     <p class="text-xl mb-8">地図で探して、レビューで選ぶ。投稿もカンタン！</p>
     <div class="space-x-4">
-      <%= link_to '近くの自転車店を探す', home_map_test_path , class: "bg-white text-blue-600 hover:bg-blue-100 font-bold py-3 px-6 rounded-full shadow-md transition duration-300" %>
-      <%= link_to '新規登録はこちら', 'new_user_registration_path', class: "bg-yellow-300 text-gray-800 hover:bg-yellow-400 font-bold py-3 px-6 rounded-full shadow-md transition duration-300" %>
+      <%= link_to '近くの自転車店を探す', search_shops_path, class: "bg-white text-blue-600 hover:bg-blue-100 font-bold py-3 px-6 rounded-full shadow-md transition duration-300" %>
+      <%= link_to '新規登録はこちら', new_user_registration_path, class: "bg-yellow-300 text-gray-800 hover:bg-yellow-400 font-bold py-3 px-6 rounded-full shadow-md transition duration-300" %>
     </div>
   </section>
 
@@ -53,7 +43,7 @@
   <!-- CTA Section -->
   <section class="text-center py-16 bg-indigo-600 text-white">
     <h2 class="text-2xl font-bold mb-4">レビューを投稿して他のサイクリストを助けよう！</h2>
-    <%= link_to '今すぐ新規登録', 'new_user_registration_path', class: "bg-white text-indigo-600 hover:bg-indigo-100 font-bold py-3 px-6 rounded-full shadow transition duration-300" %>
+    <%= link_to '今すぐ新規登録', new_user_registration_path, class: "bg-white text-indigo-600 hover:bg-indigo-100 font-bold py-3 px-6 rounded-full shadow transition duration-300" %>
   </section>
 
   <!-- Footer（背景色付き） -->

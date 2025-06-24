@@ -75,3 +75,9 @@ gem "dockerfile-rails", ">= 1.7", :group => :development
 
 # .env の読み込み
 gem "dotenv-rails"
+
+# ログイン機能
+gem 'devise'
+
+# 日本語化
+gem 'devise-i18n'
