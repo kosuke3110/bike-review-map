@@ -78,3 +78,6 @@ gem "dotenv-rails"
 
 # ログイン機能
 gem 'devise'
+
+# 日本語化
+gem 'devise-i18n'
