@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get 'home/map_test'
   get 'shops/search', to: 'shops#search', as: :search_shops
   get 'shops/result', to: 'shops#result', as: :result_shops
+  resources :shops, only: [:show]
+  resources :reviews, only: [:new, :create]
 
   # get '/up', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
 

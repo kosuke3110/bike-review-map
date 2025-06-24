@@ -4,13 +4,13 @@
 
   <% if @shops.present? %>
     <% @shops.each do |shop| %>
-      <div class="p-4 mb-4 bg-white rounded shadow">
+      <%= link_to shop_path(shop[:place_id]), class: "block p-4 mb-4 bg-white rounded shadow hover:bg-gray-100 transition" do %>
         <p class="text-lg font-semibold"><%= shop[:name] %></p>
         <p class="text-gray-600"><%= shop[:address] %></p>
         <% if shop[:rating] %>
           <p>評価: <%= shop[:rating] %> ⭐</p>
         <% end %>
-      </div>
+      <% end %>
     <% end %>
   <% else %>
     <p>店舗が見つかりませんでした。</p>
