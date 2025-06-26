@@ -20,17 +20,31 @@
   <% end %>
 
   <h2 class="mt-6 text-xl font-bold">ユーザー投稿レビュー</h2>
+
   <% if @reviews.any? %>
+    <% average = @reviews.average(:rating_overall)&.round(1) %>
+    <p class="mb-4 font-semibold text-lg">
+      ⭐ 総合評価平均: <%= average.present? ? "#{average} / 5" : "未評価" %>
+    </p>
+
     <% @reviews.each do |review| %>
-      <div class="border p-2 my-2 rounded-md bg-gray-50">
-        <p class="font-semibold"><%= review.user.email %> さん</p>
-        <p>⭐ <%= review.rating %> / 5</p>
-        <p><%= review.comment %></p>
+      <div class="border p-4 my-4 rounded-lg shadow-sm bg-white">
+        <p class="font-semibold"><%= review.user.name %> さん</p>
+
+        <ul class="text-sm text-gray-800 space-y-1 mt-2">
+          <li>⭐ 総合評価: <%= review.rating_overall %> / 5</li>
+          <li>🔧 技術評価: <%= review.rating_skill %> / 5</li>
+          <li>🧑‍💼 サービス評価: <%= review.rating_service %> / 5</li>
+          <li>💰 価格評価: <%= review.rating_price %> / 5</li>
+        </ul>
+
+        <p class="mt-2 text-gray-700"><%= review.comment.presence || "（コメントなし）" %></p>
       </div>
     <% end %>
   <% else %>
     <p>まだレビューがありません。</p>
   <% end %>
+
 
   <%= link_to "レビューを投稿する", new_review_path(place_id: @shop["place_id"]), class: "mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
 
@@ -57,6 +71,7 @@
   <% else %>
     <p>Googleレビューはありません。</p>
   <% end %>
+
 
   <div class="mt-8 flex space-x-4">
     <%= link_to "← 検索結果に戻る", request.referer || result_shops_path, class: "text-blue-600 hover:underline" %>
