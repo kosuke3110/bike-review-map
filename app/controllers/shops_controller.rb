@@ -90,6 +90,10 @@ class ShopsController < ApplicationController
 
     # ユーザーレビューの取得（DBから）
     @reviews = Review.where(shop_place_id: place_id).includes(:user)
+    # 検索結果画面から来たときだけセッションに保存
+    if request.referer&.include?("/shops/result")
+      session[:back_to_search] = request.referer
+    end
   end
 
   private
