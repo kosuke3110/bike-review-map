@@ -3,34 +3,44 @@
 <%= form_with(model: @review, local: true) do |f| %>
   <%= f.hidden_field :shop_place_id %>
 
-  <div>
-    <%= f.label :rating_overall, "総合評価 (1〜5)" %>
-    <%= f.number_field :rating_overall, in: 1..5, required: true %>
+  <div class="mb-4">
+    <%= f.label :rating_overall, "総合評価 (1〜5)", class: "block font-semibold" %>
+    <%= f.number_field :rating_overall, in: 1..5, required: true, class: "border rounded w-full p-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :rating_skill, "技術の評価", class: "block font-semibold" %>
+    <%= f.number_field :rating_skill, in: 1..5, required: true, class: "border rounded w-full p-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :rating_service, "接客の評価", class: "block font-semibold" %>
+    <%= f.number_field :rating_service, in: 1..5, required: true, class: "border rounded w-full p-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :rating_price, "価格の評価", class: "block font-semibold" %>
+    <%= f.number_field :rating_price, in: 1..5, required: true, class: "border rounded w-full p-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :comment, "コメント", class: "block font-semibold" %>
+    <%= f.text_area :comment, rows: 4, class: "border rounded w-full p-2" %>
+  </div>
+
+  <div class="mb-4">
+    <p class="font-semibold">タグ（複数選択可）:</p>
+    <% Tag.all.each do |tag| %>
+      <label class="block">
+        <%= check_box_tag "review[tag_ids][]", tag.id, @review.tags.include?(tag), id: "tag_#{tag.id}" %>
+        <%= label_tag "tag_#{tag.id}", tag.name %>
+      </label>
+    <% end %>
   </div>
 
   <div>
-    <%= f.label :rating_skill, "技術の評価" %>
-    <%= f.number_field :rating_skill, in: 1..5, required: true %>
-  </div>
-
-  <div>
-    <%= f.label :rating_service, "接客の評価" %>
-    <%= f.number_field :rating_service, in: 1..5, required: true %>
-  </div>
-
-  <div>
-    <%= f.label :rating_price, "価格の評価" %>
-    <%= f.number_field :rating_price, in: 1..5, required: true %>
-  </div>
-
-  <div>
-    <%= f.label :comment, "コメント" %>
-    <%= f.text_area :comment %>
-  </div>
-
-  <div>
-    <%= f.submit "更新する", class: "bg-green-500 text-white px-4 py-2 rounded" %>
+    <%= f.submit "更新する", class: "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" %>
   </div>
 <% end %>
 
-<%= link_to "戻る", shop_path(@review.shop_place_id), class: "text-blue-600 underline mt-4 inline-block" %>
+<%= link_to "← 戻る", shop_path(@review.shop_place_id), class: "text-blue-600 underline mt-4 inline-block" %>

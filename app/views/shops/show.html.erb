@@ -43,6 +43,17 @@
           <li>💰 価格評価: <%= review.rating_price %> / 5</li>
         </ul>
 
+        <% if review.tags.any? %>
+        <div class="mt-2 text-sm text-gray-600">
+            🏷️ タグ:
+            <% review.tags.each do |tag| %>
+            <span class="inline-block bg-gray-200 text-gray-800 px-2 py-1 rounded mr-2 mb-1">
+                <%= tag.name %>
+            </span>
+            <% end %>
+        </div>
+        <% end %>
+
         <p class="mt-2 text-gray-700"><%= review.comment.presence || "（コメントなし）" %></p>
         <% if current_user == review.user %>
           <div class="mt-2 space-x-4">
