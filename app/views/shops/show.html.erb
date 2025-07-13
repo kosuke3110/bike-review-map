@@ -8,11 +8,39 @@
   <%= link_to "🔍 新しく検索する", search_shops_path, class: "text-blue-600 hover:underline" %>
 </div>
 
-<div id="map"
-     data-lat="<%= @shop['geometry']['location']['lat'] %>"
-     data-lng="<%= @shop['geometry']['location']['lng'] %>"
-     class="w-full h-96 rounded shadow my-4">
-</div>
+<div id="map" style="width: 100%; height: 400px;"></div>
+
+<script>
+  function initMap() {
+    const shop = {
+      lat: <%= @shop.dig('geometry', 'location', 'lat') || 35.681236 %>,
+      lng: <%= @shop.dig('geometry', 'location', 'lng') || 139.767125 %>,
+      name: "<%= j @shop['name'] || '店舗情報なし' %>",
+      address: "<%= j @shop['formatted_address'] || '住所情報なし' %>"
+    };
+
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 15,
+      center: { lat: shop.lat, lng: shop.lng }
+    });
+
+    const marker = new google.maps.Marker({
+      position: { lat: shop.lat, lng: shop.lng },
+      map: map,
+      title: shop.name
+    });
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: `<div><strong>${shop.name}</strong><br>${shop.address}</div>`
+    });
+
+    marker.addListener("click", () => {
+      infoWindow.open(map, marker);
+    });
+  }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap" async defer></script>
 
 <div class="max-w-3xl mx-auto p-4">
   <h1 class="text-2xl font-bold mb-4"><%= @shop["name"] %></h1>
@@ -72,7 +100,6 @@
     <p>まだレビューがありません。</p>
   <% end %>
 
-
   <%= link_to "レビューを投稿する", new_review_path(place_id: @shop["place_id"]), class: "mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
 
   <h2 class="mt-6 text-xl font-bold">Googleレビュー</h2>
@@ -98,7 +125,6 @@
   <% else %>
     <p>Googleレビューはありません。</p>
   <% end %>
-
 
   <div class="mt-8 flex space-x-4">
     <% if session[:back_to_search].present? %>
