@@ -8,8 +8,7 @@ Rails.application.routes.draw do
   get 'shops/search', to: 'shops#search', as: :search_shops
   get 'shops/result', to: 'shops#result', as: :result_shops
   resources :shops, only: [:show]
-  resources :reviews, only: [:new, :create]
-
+  resources :reviews, only: [:new, :create, :edit, :update, :destroy]
   # get '/up', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

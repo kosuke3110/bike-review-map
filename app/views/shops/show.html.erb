@@ -1,8 +1,46 @@
-  <div class="mt-8 flex space-x-4">
-    <%= link_to "← 検索結果に戻る", request.referer || result_shops_path, class: "text-blue-600 hover:underline" %>
-    <%= link_to "🔍 新しく検索する", search_shops_path, class: "text-blue-600 hover:underline" %>
-  </div>
+<div class="mt-8 flex space-x-4">
+  <% if session[:back_to_search].present? %>
+    <%= link_to "← 検索結果に戻る", session[:back_to_search], class: "text-blue-600 hover:underline" %>
+  <% else %>
+    <%= link_to "← 検索結果に戻る", result_shops_path, class: "text-blue-600 hover:underline" %>
+  <% end %>
+
+  <%= link_to "🔍 新しく検索する", search_shops_path, class: "text-blue-600 hover:underline" %>
 </div>
+
+<div id="map" style="width: 100%; height: 400px;"></div>
+
+<script>
+  function initMap() {
+    const shop = {
+      lat: <%= @shop.dig('geometry', 'location', 'lat') || 35.681236 %>,
+      lng: <%= @shop.dig('geometry', 'location', 'lng') || 139.767125 %>,
+      name: "<%= j @shop['name'] || '店舗情報なし' %>",
+      address: "<%= j @shop['formatted_address'] || '住所情報なし' %>"
+    };
+
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 15,
+      center: { lat: shop.lat, lng: shop.lng }
+    });
+
+    const marker = new google.maps.Marker({
+      position: { lat: shop.lat, lng: shop.lng },
+      map: map,
+      title: shop.name
+    });
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: `<div><strong>${shop.name}</strong><br>${shop.address}</div>`
+    });
+
+    marker.addListener("click", () => {
+      infoWindow.open(map, marker);
+    });
+  }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap" async defer></script>
 
 <div class="max-w-3xl mx-auto p-4">
   <h1 class="text-2xl font-bold mb-4"><%= @shop["name"] %></h1>
@@ -20,12 +58,42 @@
   <% end %>
 
   <h2 class="mt-6 text-xl font-bold">ユーザー投稿レビュー</h2>
+
   <% if @reviews.any? %>
+    <% average = @reviews.average(:rating_overall)&.round(1) %>
+    <p class="mb-4 font-semibold text-lg">
+      ⭐ 総合評価平均: <%= average.present? ? "#{average} / 5" : "未評価" %>
+    </p>
+
     <% @reviews.each do |review| %>
-      <div class="border p-2 my-2 rounded-md bg-gray-50">
-        <p class="font-semibold"><%= review.user.email %> さん</p>
-        <p>⭐ <%= review.rating %> / 5</p>
-        <p><%= review.comment %></p>
+      <div class="border p-4 my-4 rounded-lg shadow-sm bg-white">
+        <p class="font-semibold"><%= review.user.name %> さん</p>
+
+        <ul class="text-sm text-gray-800 space-y-1 mt-2">
+          <li>⭐ 総合評価: <%= review.rating_overall %> / 5</li>
+          <li>🔧 技術評価: <%= review.rating_skill %> / 5</li>
+          <li>🧑‍💼 サービス評価: <%= review.rating_service %> / 5</li>
+          <li>💰 価格評価: <%= review.rating_price %> / 5</li>
+        </ul>
+
+        <% if review.tags.any? %>
+        <div class="mt-2 text-sm text-gray-600">
+            🏷️ タグ:
+            <% review.tags.each do |tag| %>
+            <span class="inline-block bg-gray-200 text-gray-800 px-2 py-1 rounded mr-2 mb-1">
+                <%= tag.name %>
+            </span>
+            <% end %>
+        </div>
+        <% end %>
+
+        <p class="mt-2 text-gray-700"><%= review.comment.presence || "（コメントなし）" %></p>
+        <% if current_user == review.user %>
+          <div class="mt-2 space-x-4">
+            <%= link_to "編集", edit_review_path(review), class: "text-blue-500 underline" %>
+            <%= link_to "削除", review_path(review), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-red-500 underline" %>
+          </div>
+        <% end %>
       </div>
     <% end %>
   <% else %>
@@ -59,7 +127,12 @@
   <% end %>
 
   <div class="mt-8 flex space-x-4">
-    <%= link_to "← 検索結果に戻る", request.referer || result_shops_path, class: "text-blue-600 hover:underline" %>
+    <% if session[:back_to_search].present? %>
+        <%= link_to "← 検索結果に戻る", session[:back_to_search], class: "text-blue-600 hover:underline" %>
+    <% else %>
+        <%= link_to "← 検索結果に戻る", result_shops_path, class: "text-blue-600 hover:underline" %>
+    <% end %>
+
     <%= link_to "🔍 新しく検索する", search_shops_path, class: "text-blue-600 hover:underline" %>
   </div>
 </div>
