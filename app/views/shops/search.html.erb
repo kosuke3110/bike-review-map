@@ -3,7 +3,7 @@
   <h1 class="text-xl font-bold text-center">自転車店を検索</h1>
 
   <!-- GETメソッドでresult_shops_pathに送信 -->
-  <%= form_with url: result_shops_path, method: :get, local: true do |f| %>
+  <%= form_with url: result_shops_path, method: :get, local: true, html: { id: "search-form" } do |f| %>
     <!-- 住所入力 -->
     <div>
       <%= f.label :address, "住所を入力", class: "block font-semibold" %>
@@ -14,7 +14,7 @@
     <div class="flex justify-between mt-4">
       <!-- 現在地取得ボタン -->
       <button type="button" onclick="getCurrentLocation()" class="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded">
-        現在地から探す
+        現在地を取得
       </button>
 
       <!-- フォーム送信ボタン -->
@@ -35,6 +35,7 @@
       navigator.geolocation.getCurrentPosition(function(position) {
         document.getElementById('lat-field').value = position.coords.latitude;
         document.getElementById('lng-field').value = position.coords.longitude;
+        document.getElementById('search-form').submit();
       }, function() {
         alert("位置情報の取得に失敗しました。");
       });

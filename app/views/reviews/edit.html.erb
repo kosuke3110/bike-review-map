@@ -30,6 +30,7 @@
 
   <div class="mb-4">
     <p class="font-semibold">タグ（複数選択可）:</p>
+    <%= hidden_field_tag "review[tag_ids][]", nil %>
     <% Tag.all.each do |tag| %>
       <label class="block">
         <%= check_box_tag "review[tag_ids][]", tag.id, @review.tags.include?(tag), id: "tag_#{tag.id}" %>

@@ -31,7 +31,7 @@ class ShopsController < ApplicationController
     api_key = ENV['GOOGLE_MAPS_API_KEY']
     keyword = ERB::Util.url_encode("自転車")
 
-    url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{location}&radius=1000&type=store&keyword=#{keyword}&language=ja&key=#{api_key}")
+    url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{location}&radius=4000&type=bicycle_store&keyword=#{keyword}&language=ja&key=#{api_key}")
 
     # Rails.logger.info "Places API URL: #{url}"
 

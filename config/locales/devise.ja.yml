@@ -1,4 +1,38 @@
 ja:
+  errors:
+    format: "%{message}"
+    messages:
+      not_saved:
+        one: "1 件のエラーが発生したため %{resource} は保存されませんでした。"
+        other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
+
+  activerecord:
+    models:
+      user:
+        one: "ユーザー"
+        other: "ユーザー"
+
+    attributes:
+      user:
+        email: "Eメール"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認用）"
+        name: "お名前"
+
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "お名前を入力してください"
+            email:
+              blank: "Eメールを入力してください"
+              taken: ""
+            password:
+              blank: "パスワードを入力してください"
+            password_confirmation:
+              confirmation: "パスワード（確認用）が一致しません"
+
   devise:
     failure:
       already_authenticated: "すでにログインしています。"
