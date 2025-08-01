@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get 'users/show'
-  get 'users/edit'
-  get 'users/update'
   devise_for :users
   # get 'shops/search'
   # get 'shops/result'
@@ -13,7 +10,7 @@ Rails.application.routes.draw do
   resources :shops, only: [:show]
   get 'shops/:place_id', to: 'shops#show', as: :shop_detail
   resources :reviews, only: [:new, :create, :edit, :update, :destroy]
-  resources :users, only: [:show, :edit, :update]
+  resources :users, only: [:show]
   # get '/up', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
