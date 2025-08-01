@@ -18,6 +18,7 @@
       <nav class="space-x-4 text-sm">
       <%= link_to '検索', search_shops_path, class: "hover:underline" %>
       <% if user_signed_in? %>
+        <%= link_to 'マイページ', user_path(current_user), class: "hover:underline" %>
         <span class="text-white font-semibold"><%= current_user.name %> さん</span>
         <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { turbo: false, confirm: 'ログアウトしますか？' }, class: "hover:underline" %>
       <% else %>

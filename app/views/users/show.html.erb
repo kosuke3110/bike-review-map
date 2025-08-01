@@ -1,0 +1,37 @@
+<h1>Users#show</h1>
+<p>Find me in app/views/users/show.html.erb</p>
+<h2 class="text-xl font-bold mb-4">マイページ</h2>
+<p><strong>名前:</strong> <%= @user.name %></p>
+<p><strong>メールアドレス:</strong> <%= @user.email %></p>
+
+<h3 class="mt-6 font-semibold">投稿したレビュー</h3>
+<% @reviews.each do |review| %>
+  <div class="border p-4 my-4 rounded shadow bg-white">
+    <p class="text-sm text-gray-500"><%= review.created_at.strftime("%Y/%m/%d %H:%M") %></p>
+
+    <h3 class="text-lg font-bold mt-1 mb-2">
+      Google Place ID: <%= review.shop_place_id %>
+    </h3>
+
+    <div class="mb-2">
+        <span class="mr-2">総合: ★<%= review.rating_overall %></span>
+        <span class="mr-2">技術: ★<%= review.rating_skill %></span>
+        <span class="mr-2">接客: ★<%= review.rating_service %></span>
+        <span class="mr-2">金額: ★<%= review.rating_price %></span>
+    </div>
+
+    <p class="mb-2"><%= review.comment %></p>
+
+    <% if review.tags.present? %>
+      <div class="text-sm text-gray-700">
+        タグ:
+        <% review.tags.each do |tag| %>
+          <span class="inline-block bg-gray-200 text-gray-800 px-2 py-1 rounded-full mr-1"><%= tag.name %></span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%= link_to "プロフィール編集", edit_user_path(@user), class: "text-blue-600 hover:underline" %>
+
