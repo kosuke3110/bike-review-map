@@ -10,7 +10,7 @@
     <p class="text-sm text-gray-500"><%= review.created_at.strftime("%Y/%m/%d %H:%M") %></p>
 
     <h3 class="text-lg font-bold mt-1 mb-2">
-      Google Place ID: <%= review.shop_place_id %>
+        <%= link_to review.shop_name, shop_detail_path(review.shop_place_id), class: "text-blue-600 hover:underline" %>
     </h3>
 
     <div class="mb-2">
@@ -30,6 +30,12 @@
         <% end %>
       </div>
     <% end %>
+
+    <div class="mt-4 flex space-x-4 text-sm">
+      <%= link_to "編集", edit_review_path(review), class: "text-blue-600 hover:underline" %>
+      <%= link_to "削除", review_path(review), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-red-600 hover:underline" %>
+    </div>
+  </div>
   </div>
 <% end %>
 
