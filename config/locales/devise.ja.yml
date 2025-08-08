@@ -5,6 +5,7 @@ ja:
       not_saved:
         one: "1 件のエラーが発生したため %{resource} は保存されませんでした。"
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
+      blank: "を入力してください"
 
   activerecord:
     models:
@@ -32,6 +33,8 @@ ja:
               blank: "パスワードを入力してください"
             password_confirmation:
               confirmation: "パスワード（確認用）が一致しません"
+            current_password:
+              blank: "現在のパスワードを入力してください"
 
   devise:
     failure:

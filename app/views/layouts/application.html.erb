@@ -18,7 +18,7 @@
       <nav class="space-x-4 text-sm">
       <%= link_to '検索', search_shops_path, class: "hover:underline" %>
       <% if user_signed_in? %>
-        <span class="text-white font-semibold"><%= current_user.name %> さん</span>
+        <%= link_to "#{current_user.name} さん", user_path(current_user), class: "hover:underline text-white font-semibold" %>
         <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { turbo: false, confirm: 'ログアウトしますか？' }, class: "hover:underline" %>
       <% else %>
         <%= link_to '新規登録', new_user_registration_path, class: "hover:underline" %>
