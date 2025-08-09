@@ -1,42 +1,59 @@
-<h2 class="text-2xl font-bold text-center mb-6">ログイン</h2>
+<h2 class="text-2xl font-bold text-center mb-8 mt-6">ログイン</h2>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "max-w-md mx-auto bg-white p-6 rounded-lg shadow-md" }) do |f| %>
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
 
-  <!-- メールアドレス -->
-  <div class="mb-4">
-    <%= f.label :email, "メールアドレス", class: "block text-gray-700 font-semibold mb-1" %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300" %>
-  </div>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "" }) do |f| %>
 
-  <!-- パスワード -->
-  <div class="mb-4">
-    <%= f.label :password, "パスワード", class: "block text-gray-700 font-semibold mb-1" %>
-    <%= f.password_field :password, autocomplete: "current-password", class: "w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300" %>
-  </div>
+    <!-- メールアドレス -->
+    <div class="mb-5">
+      <%= f.label :email, "メールアドレス", class: "block text-gray-700 font-semibold mb-2" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" %>
+    </div>
 
-  <!-- ログイン状態を保持 -->
-  <% if devise_mapping.rememberable? %>
-    <div class="mb-4 flex items-center">
-      <%= f.check_box :remember_me, class: "mr-2" %>
-      <%= f.label :remember_me, "ログイン状態を保持する", class: "text-sm text-gray-700" %>
+    <!-- パスワード -->
+    <div class="mb-5">
+      <%= f.label :password, "パスワード", class: "block text-gray-700 font-semibold mb-2" %>
+      <%= f.password_field :password, autocomplete: "current-password", class: "w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" %>
+    </div>
+
+    <!-- ログイン状態を保持
+    <% if devise_mapping.rememberable? %>
+      <div class="mb-5 flex items-center">
+        <%= f.check_box :remember_me, class: "mr-2" %>
+        <%= f.label :remember_me, "ログイン状態を保持する", class: "text-sm text-gray-700" %>
+      </div>
+    <% end %>
+    -->
+
+    <!-- ログインボタン -->
+    <div class="text-center mb-8">
+      <%= f.submit "ログイン", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-full transition duration-300" %>
     </div>
   <% end %>
 
-  <!-- ログインボタン -->
-  <div class="text-center">
-    <%= f.submit "ログイン", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition duration-300" %>
+  <!-- Googleログインボタンを中央揃え
+  <div class="flex justify-center">
+    <%= button_to user_google_oauth2_omniauth_authorize_path, method: :post, form: { data: { turbo: false } }, class: "flex items-center border border-gray-300 rounded px-4 py-2 hover:bg-gray-100 transition" do %>
+      <%= image_tag "google-logo.png", alt: "Googleのロゴ", class: "w-6 h-6 mr-3" %>
+      <span class="font-semibold text-gray-700">Googleでログイン</span>
+    <% end %>
+  </div> -->
+  <div class="flex justify-center">
+    <%= button_to user_google_oauth2_omniauth_authorize_path,
+                  method: :post,
+                  form: { data: { turbo: false } },
+                  class: "p-0 border-none bg-transparent hover:opacity-90 transition" do %>
+      <%= image_tag "google-logo.png",
+                    alt: "Googleでサインアップ",
+                    class: "h-12 w-auto" %>
+    <% end %>
   </div>
-<% end %>
+</div>
 
-<%= form_with url: user_google_oauth2_omniauth_authorize_path, method: :post, local: true do %>
-  <%= submit_tag "Googleでログイン", class: "bg-red-500 text-white px-4 py-2 rounded" %>
-<% end %>
 
-<%= button_to "Googleでログイン", user_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: "bg-red-500 text-white px-4 py-2 rounded" %>
-
-<div class="text-center mt-4 text-sm text-gray-600">
+<div class="text-center mt-6 text-sm text-gray-600 max-w-md mx-auto">
   <%= render "devise/shared/links" %>
-  <div>
+  <div class="mt-2">
     <%= link_to 'topに戻る', root_path, class: "text-blue-600 hover:underline" %>
   </div>
 </div>

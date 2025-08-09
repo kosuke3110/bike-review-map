@@ -5,10 +5,11 @@
   <div class="mb-6 max-w-md bg-white p-6 rounded shadow">
     <p class="mb-2"><strong class="font-semibold">名前:</strong> <span class="text-gray-800"><%= @user.name %></span></p>
     <p class="mb-4"><strong class="font-semibold">メールアドレス:</strong> <span class="text-gray-800"><%= @user.email %></span></p>
-    <div class="text-right">
-      <%= link_to "アカウント設定", edit_user_registration_path, class: "text-blue-600 hover:underline font-semibold" %>
-    </div>
-  </div>
+    <% unless current_user.provider == "google_oauth2" %>
+      <div class="text-right">
+        <%= link_to "アカウント設定", edit_user_registration_path, class: "text-blue-600 hover:underline font-semibold" %>
+      </div>
+    <% end %>
 
   <h3 class="text-xl font-semibold mb-4 border-b pb-2">投稿したレビュー</h3>
 
