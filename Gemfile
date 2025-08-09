@@ -81,3 +81,8 @@ gem 'devise'
 
 # 日本語化
 gem 'devise-i18n'
+
+# google ログイン
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'

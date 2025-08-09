@@ -26,8 +26,13 @@
   <div class="text-center">
     <%= f.submit "ログイン", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition duration-300" %>
   </div>
-
 <% end %>
+
+<%= form_with url: user_google_oauth2_omniauth_authorize_path, method: :post, local: true do %>
+  <%= submit_tag "Googleでログイン", class: "bg-red-500 text-white px-4 py-2 rounded" %>
+<% end %>
+
+<%= button_to "Googleでログイン", user_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: "bg-red-500 text-white px-4 py-2 rounded" %>
 
 <div class="text-center mt-4 text-sm text-gray-600">
   <%= render "devise/shared/links" %>
@@ -35,3 +40,4 @@
     <%= link_to 'topに戻る', root_path, class: "text-blue-600 hover:underline" %>
   </div>
 </div>
+
