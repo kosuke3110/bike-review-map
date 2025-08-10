@@ -1,7 +1,7 @@
 <h2 class="text-xl font-bold mb-4">レビューを編集</h2>
 
 <%= form_with(model: @review, local: true) do |f| %>
-  <%= f.hidden_field :shop_place_id %>
+    <%= hidden_field_tag :redirect_to, params[:redirect_to] || shop_path(@review.shop_place_id) %>
 
   <div class="mb-4">
     <%= f.label :rating_overall, "総合評価 (1〜5)", class: "block font-semibold" %>

@@ -23,7 +23,8 @@ class ReviewsController < ApplicationController
 
   def update
     if @review.update(review_params)
-      redirect_to user_path(current_user), notice: 'レビューを更新しました！'
+      redirect_to params[:redirect_to].presence || user_path(current_user), notice: 'レビューを更新しました！'
+      # redirect_to user_path(current_user), notice: 'レビューを更新しました！'
       #  redirect_to shop_path(@review.shop_place_id), notice: "レビューを更新しました！"
     else
       render :edit, status: :unprocessable_entity

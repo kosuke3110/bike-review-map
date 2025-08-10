@@ -90,7 +90,7 @@
         <p class="mt-2 text-gray-700"><%= review.comment.presence || "（コメントなし）" %></p>
         <% if current_user == review.user %>
           <div class="mt-2 space-x-4">
-            <%= link_to "編集", edit_review_path(review), class: "text-blue-500 underline" %>
+            <%= link_to "編集", edit_review_path(review, redirect_to: request.fullpath), class: "text-blue-500 underline" %>
             <%= link_to "削除", review_path(review), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-red-500 underline" %>
           </div>
         <% end %>
