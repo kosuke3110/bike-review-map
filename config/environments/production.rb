@@ -103,4 +103,6 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
   # Deviseメール内のリンク
   config.action_mailer.default_url_options = { host: 'bike-review-map.fly.dev', protocol: 'https' }
+  config.action_controller.asset_host = 'https://bike-review-map.fly.dev'
+  config.public_file_server.enabled = true
 end
