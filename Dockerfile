@@ -10,6 +10,12 @@ RUN curl -sL https://deb.nodesource.com/setup_19.x | bash - \
   && apt-get update -qq \
   && apt-get install -y build-essential libpq-dev nodejs yarn libjemalloc2
 
+# 開発・テスト環境のみ Chrome を入れる（CI用）
+ARG INSTALL_CHROME=false
+RUN if [ "$INSTALL_CHROME" = "true" ]; then \
+      apt-get install -y chromium chromium-driver; \
+    fi
+
 # アプリケーション用ディレクトリ作成
 RUN mkdir /rails
 WORKDIR /rails

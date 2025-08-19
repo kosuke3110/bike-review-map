@@ -6,6 +6,16 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FCDH55ES74"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-FCDH55ES74');
+    </script>
+
     <!-- OGP 基本設定 -->
     <meta property="og:title" content="Bike Review Map" />
     <meta property="og:description" content="全国の自転車店レビューを地図で検索できるサービス" />
