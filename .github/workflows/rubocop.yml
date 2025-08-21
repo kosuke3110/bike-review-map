@@ -2,11 +2,9 @@ name: RuboCop Lint (Docker)
 
 on:
   push:
-    branches:
-      - main
+    branches: ["*"]
   pull_request:
-    branches:
-      - main
+    branches: [master]
 
 jobs:
   rubocop:
