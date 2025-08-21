@@ -17,7 +17,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build Docker Compose
-        run: docker-compose build
+        run: docker compose build
 
       - name: Run RuboCop
-        run: docker-compose run --rm web bundle exec rubocop
+        run: docker compose run --rm web bundle exec rubocop
