@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 
 require 'rspec/rails'
 require 'capybara/rspec'
@@ -16,11 +18,11 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 # Require support files
-Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
+Rails.root.glob('spec/support/**/*.rb').each { |f| require f }
 
 RSpec.configure do |config|
   # Fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_path = Rails.root.join('spec/fixtures').to_s
   config.use_transactional_fixtures = true
 
   # FactoryBot
@@ -36,7 +38,7 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do |example|
     if example.metadata[:js]
       # JS テストは rack_test では動かないので警告を出す
-      skip "JavaScript は rack_test では動作しません"
+      skip 'JavaScript は rack_test では動作しません'
     else
       driven_by :rack_test
     end

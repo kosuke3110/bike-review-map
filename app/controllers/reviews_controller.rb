@@ -1,24 +1,26 @@
+# frozen_string_literal: true
+
 class ReviewsController < ApplicationController
-    before_action :authenticate_user!
-    before_action :set_review, only: [:edit, :update, :destroy]
-    before_action :authorize_user!, only: [:edit, :update]
+  before_action :authenticate_user!
+  before_action :set_review, only: %i[edit update destroy]
+  before_action :authorize_user!, only: %i[edit update]
 
   def new
     @review = Review.new(shop_place_id: params[:place_id])
+  end
+
+  def edit
+    # @review は before_action で取得済み
   end
 
   def create
     @review = current_user.reviews.build(review_params)
     @review.shop_name = fetch_place_name(@review.shop_place_id)
     if @review.save
-      redirect_to shop_path(@review.shop_place_id), notice: "レビューを投稿しました"
+      redirect_to shop_path(@review.shop_place_id), notice: 'レビューを投稿しました'
     else
       render :new
     end
-  end
-
-  def edit
-    # @review は before_action で取得済み
   end
 
   def update
@@ -32,7 +34,7 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    shop_place_id = @review.shop_place_id
+    @review.shop_place_id
     @review.destroy
     redirect_to request.referer.presence || user_path(current_user), notice: 'レビューを削除しました。'
     # redirect_to shop_path(shop_place_id), notice: "レビューを削除しました"
@@ -41,23 +43,21 @@ class ReviewsController < ApplicationController
   private
 
   def fetch_place_name(place_id)
-    api_key = ENV["GOOGLE_MAPS_API_KEY"]
+    api_key = ENV.fetch('GOOGLE_MAPS_API_KEY', nil)
     url = URI("https://maps.googleapis.com/maps/api/place/details/json?place_id=#{place_id}&key=#{api_key}&fields=name&language=ja")
-  
+
     res = Net::HTTP.get_response(url)
     json = JSON.parse(res.body)
-  
+
     # Rails.logger.info("[Google Places API] response: #{json.inspect}")
-  
-    if json["status"] == "OK"
-      return json.dig("result", "name") || "名前なし"
-    else
-      # Rails.logger.warn("[Google Places API] エラー: #{json['status']} - #{json['error_message']}")
-      return "店舗名取得失敗"
-    end
-  rescue => e
+
+    return json.dig('result', 'name') || '名前なし' if json['status'] == 'OK'
+
+    # Rails.logger.warn("[Google Places API] エラー: #{json['status']} - #{json['error_message']}")
+    '店舗名取得失敗'
+  rescue StandardError
     # Rails.logger.error("[Google Places API] 例外発生: #{e.message}")
-    "店舗名取得失敗"
+    '店舗名取得失敗'
   end
 
   def review_params
@@ -72,6 +72,6 @@ class ReviewsController < ApplicationController
   end
 
   def authorize_user!
-    redirect_to root_path, alert: "権限がありません" unless @review.user == current_user
+    redirect_to root_path, alert: '権限がありません' unless @review.user == current_user
   end
 end

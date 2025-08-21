@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require 'uri'
 require 'json'
 require 'erb'
 
 class ShopsController < ApplicationController
-
   # 住所 → 緯度経度に変換
   def geocode_address(address)
-    api_key = ENV['GOOGLE_MAPS_API_KEY']
+    api_key = ENV.fetch('GOOGLE_MAPS_API_KEY', nil)
     encoded_address = ERB::Util.url_encode(address)
     url = URI("https://maps.googleapis.com/maps/api/geocode/json?address=#{encoded_address}&key=#{api_key}")
 
@@ -28,8 +29,8 @@ class ShopsController < ApplicationController
 
   # 緯度経度 → 自転車店検索
   def search_bike_shops(location)
-    api_key = ENV['GOOGLE_MAPS_API_KEY']
-    keyword = ERB::Util.url_encode("自転車")
+    api_key = ENV.fetch('GOOGLE_MAPS_API_KEY', nil)
+    keyword = ERB::Util.url_encode('自転車')
 
     url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{location}&radius=4000&type=bicycle_store&keyword=#{keyword}&language=ja&key=#{api_key}")
 
@@ -68,7 +69,7 @@ class ShopsController < ApplicationController
       location = geocode_address(@address)
       if location.nil?
         @shops = []
-        flash.now[:alert] = "住所のジオコーディングに失敗しました。"
+        flash.now[:alert] = '住所のジオコーディングに失敗しました。'
         return
       end
       Rails.logger.info "ジオコーディングで得た場所: #{location.inspect}"
@@ -76,7 +77,7 @@ class ShopsController < ApplicationController
       location = "#{@lat},#{@lng}"
     else
       @shops = []
-      flash.now[:alert] = "住所または現在地を指定してください。"
+      flash.now[:alert] = '住所または現在地を指定してください。'
       return
     end
 
@@ -93,22 +94,22 @@ class ShopsController < ApplicationController
     # ユーザーレビューの取得（DBから）
     @reviews = Review.where(shop_place_id: place_id).includes(:user)
     # 検索結果画面から来たときだけセッションに保存
-    if request.referer&.include?("/shops/result")
-      session[:back_to_search] = request.referer
-    end
+    return unless request.referer&.include?('/shops/result')
+
+    session[:back_to_search] = request.referer
   end
 
   private
 
   def fetch_place_details(place_id)
-    api_key = ENV['GOOGLE_MAPS_API_KEY']
+    api_key = ENV.fetch('GOOGLE_MAPS_API_KEY', nil)
     url = URI("https://maps.googleapis.com/maps/api/place/details/json?place_id=#{place_id}&language=ja&key=#{api_key}")
 
     res = Net::HTTP.get_response(url)
     data = JSON.parse(res.body)
 
-    if data["status"] == "OK"
-      data["result"]
+    if data['status'] == 'OK'
+      data['result']
     else
       {}
     end
