@@ -9,6 +9,9 @@ on:
 jobs:
   rubocop:
     runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+      GOOGLE_MAPS_API_KEY: dummy_key
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -20,4 +23,4 @@ jobs:
         run: docker compose build
 
       - name: Run RuboCop
-        run: docker compose run --rm web bundle exec rubocop
+        run: docker compose run --rm -e RAILS_ENV -e GOOGLE_MAPS_API_KEY web bundle exec rubocop
