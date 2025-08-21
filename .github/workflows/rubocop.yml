@@ -1,4 +1,4 @@
-name: RuboCop Lint (Docker)
+name: RuboCop Lint
 
 on:
   push:
@@ -9,18 +9,19 @@ on:
 jobs:
   rubocop:
     runs-on: ubuntu-latest
-    env:
-      RAILS_ENV: test
-      GOOGLE_MAPS_API_KEY: dummy_key
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
 
-      - name: Build Docker Compose
-        run: docker compose build
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
 
       - name: Run RuboCop
-        run: docker compose run --rm -e RAILS_ENV -e GOOGLE_MAPS_API_KEY web bundle exec rubocop
+        run: bundle exec rubocop
