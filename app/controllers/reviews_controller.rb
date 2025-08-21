@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# レビュー機能
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_review, only: %i[edit update destroy]
@@ -17,7 +18,7 @@ class ReviewsController < ApplicationController
     @review = current_user.reviews.build(review_params)
     @review.shop_name = fetch_place_name(@review.shop_place_id)
     if @review.save
-      redirect_to shop_path(@review.shop_place_id), notice: 'レビューを投稿しました'
+      redirect_to shop_path(@review.shop_place_id), notice: t('reviews.create_success')
     else
       render :new
     end
@@ -25,7 +26,7 @@ class ReviewsController < ApplicationController
 
   def update
     if @review.update(review_params)
-      redirect_to params[:redirect_to].presence || user_path(current_user), notice: 'レビューを更新しました！'
+      redirect_to params[:redirect_to].presence || user_path(current_user), notice: t('reviews.update_success')
       # redirect_to user_path(current_user), notice: 'レビューを更新しました！'
       #  redirect_to shop_path(@review.shop_place_id), notice: "レビューを更新しました！"
     else
@@ -36,7 +37,7 @@ class ReviewsController < ApplicationController
   def destroy
     @review.shop_place_id
     @review.destroy
-    redirect_to request.referer.presence || user_path(current_user), notice: 'レビューを削除しました。'
+    redirect_to request.referer.presence || user_path(current_user), notice: t('reviews.delete_success')
     # redirect_to shop_path(shop_place_id), notice: "レビューを削除しました"
   end
 
@@ -72,6 +73,6 @@ class ReviewsController < ApplicationController
   end
 
   def authorize_user!
-    redirect_to root_path, alert: '権限がありません' unless @review.user == current_user
+    redirect_to root_path, alert: t('reviews.no_permission') unless @review.user == current_user
   end
 end

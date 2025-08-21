@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# 自転車店レビュー
 class Review < ApplicationRecord
   belongs_to :user
   has_many :review_tags, dependent: :destroy

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# ユーザーのプロフィール表示・編集を管理
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user
