@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
@@ -12,7 +14,7 @@ Rails.application.routes.draw do
   get 'shops/result', to: 'shops#result', as: :result_shops
   resources :shops, only: [:show]
   get 'shops/:place_id', to: 'shops#show', as: :shop_detail
-  resources :reviews, only: [:new, :create, :edit, :update, :destroy]
+  resources :reviews, only: %i[new create edit update destroy]
   resources :users, only: [:show]
   # get '/up', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
 

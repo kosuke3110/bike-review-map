@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateReviewTags < ActiveRecord::Migration[7.1]
   def change
     create_table :review_tags do |t|
@@ -6,6 +8,6 @@ class CreateReviewTags < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
-    add_index :review_tags, [:review_id, :tag_id], unique: true
+    add_index :review_tags, %i[review_id tag_id], unique: true
   end
 end

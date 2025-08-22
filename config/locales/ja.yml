@@ -1,0 +1,20 @@
+# config/locales/ja.yml
+ja:
+  reviews:
+    create_success: "レビューを投稿しました"
+    update_success: "レビューを更新しました！"
+    delete_success: "レビューを削除しました。"
+    no_permission: "権限がありません"
+
+  shops:
+    geocode_fail: "住所のジオコーディングに失敗しました。"
+    missing_address: "住所または現在地を指定してください。"
+
+  users:
+    google_auth_fail: "Google認証に失敗しました。"
+    login_fail: "ログインに失敗しました。"
+
+  blogs:
+    created: "Blog was successfully created."
+    updated: "Blog was successfully updated."
+    destroyed: "Blog was successfully destroyed."

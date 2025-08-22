@@ -1,0 +1,30 @@
+# .rubocop.yml
+AllCops:
+  TargetRubyVersion: 3.1
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'bin/*'
+    - 'db/migrate/**/*.rb'
+    - 'backup/**/*'
+  SuggestExtensions: false
+
+plugins:
+  - rubocop-rails
+
+Rails:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'config/environments/*.rb'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'app/controllers/shops_controller.rb'
+    - 'app/controllers/users/omniauth_callbacks_controller.rb'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'app/controllers/shops_controller.rb'
+
