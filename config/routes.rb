@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   root to: 'home#top'
   get 'home/top'
   get 'home/map_test'
+  get 'privacy_policy', to: 'home#privacy_policy'
+  get 'terms_of_service', to: 'home#terms_of_service'
   get 'shops/search', to: 'shops#search', as: :search_shops
   get 'shops/result', to: 'shops#result', as: :result_shops
   resources :shops, only: [:show]
