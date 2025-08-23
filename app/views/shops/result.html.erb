@@ -59,6 +59,10 @@
         <% end %>
       <% end %>
     <% end %>
+  <!-- ページングリンク -->
+  <div class="mt-6 mb-8 flex justify-center">
+    <%= paginate @shops %>
+  </div>
   <% else %>
     <p>店舗が見つかりませんでした。</p>
   <% end %>

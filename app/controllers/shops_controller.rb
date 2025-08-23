@@ -13,7 +13,10 @@ class ShopsController < ApplicationController
     location = determine_location
     return if location.nil?
 
-    @shops = search_bike_shops(location)
+    all_shops = search_bike_shops(location)
+
+    # Kaminariでページング（1ページ10件）
+    @shops = Kaminari.paginate_array(all_shops).page(params[:page]).per(5)
   end
 
   # 店舗詳細画面表示
