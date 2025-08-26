@@ -13,9 +13,11 @@ class ShopsController < ApplicationController
     location = determine_location
     return if location.nil?
 
-    all_shops = search_bike_shops(location)
+    keyword = params[:keyword].presence || '自転車'
+    radius  = params[:radius].presence || 3000
 
-    # Kaminariでページング（1ページ10件）
+    all_shops = search_bike_shops(location, keyword, radius)
+
     @shops = Kaminari.paginate_array(all_shops).page(params[:page]).per(5)
   end
 
@@ -65,11 +67,11 @@ class ShopsController < ApplicationController
   end
 
   # 緯度経度 → 自転車店検索
-  def search_bike_shops(location)
+  def search_bike_shops(location, keyword, radius)
     api_key = ENV.fetch('GOOGLE_MAPS_API_KEY', nil)
-    keyword = ERB::Util.url_encode('自転車')
+    encoded_keyword = ERB::Util.url_encode(keyword)
 
-    url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{location}&radius=4000&type=bicycle_store&keyword=#{keyword}&language=ja&key=#{api_key}")
+    url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{location}&radius=#{radius}&type=bicycle_store&keyword=#{encoded_keyword}&language=ja&key=#{api_key}")
     result = JSON.parse(Net::HTTP.get(url))
     return [] unless result['status'] == 'OK'
 
@@ -101,6 +103,111 @@ class ShopsController < ApplicationController
     session[:back_to_search] = request.referer
   end
 end
+
+# # frozen_string_literal: true
+
+# require 'net/http'
+# require 'uri'
+# require 'json'
+# require 'erb'
+
+# # Google API を利用して自転車店を取得するコントローラ
+# class ShopsController < ApplicationController
+
+#   # 検索結果画面表示
+#   def result
+#     @shops = []
+#     location = determine_location
+#     return if location.nil?
+
+#     all_shops = search_bike_shops(location)
+
+#     # Kaminariでページング（1ページ10件）
+#     @shops = Kaminari.paginate_array(all_shops).page(params[:page]).per(5)
+#   end
+
+#   # 店舗詳細画面表示
+#   def show
+#     place_id = params[:id]
+#     @shop = fetch_place_details(place_id)
+#     @reviews = Review.where(shop_place_id: place_id).includes(:user)
+#     store_back_to_search_session(_place_id = place_id)
+#   end
+
+#   private
+
+#   # パラメータから検索位置を決定
+#   def determine_location
+#     return determine_location_from_address if params[:address].present?
+#     return determine_location_from_coords if params[:lat].present? && params[:lng].present?
+
+#     flash.now[:alert] = t('shops.missing_address')
+#     nil
+#   end
+
+#   # 住所から緯度経度を取得
+#   def determine_location_from_address
+#     loc = geocode_address(params[:address])
+#     flash.now[:alert] = t('shops.geocode_fail') if loc.nil?
+#     loc
+#   end
+
+#   # 緯度経度から位置を決定
+#   def determine_location_from_coords
+#     "#{params[:lat]},#{params[:lng]}"
+#   end
+
+#   # 住所 → 緯度経度に変換
+#   def geocode_address(address)
+#     api_key = ENV.fetch('GOOGLE_MAPS_API_KEY', nil)
+#     encoded_address = ERB::Util.url_encode(address)
+#     url = URI("https://maps.googleapis.com/maps/api/geocode/json?address=#{encoded_address}&key=#{api_key}")
+
+#     result = JSON.parse(Net::HTTP.get(url))
+#     return unless result['status'] == 'OK'
+
+#     lat = result['results'][0]['geometry']['location']['lat']
+#     lng = result['results'][0]['geometry']['location']['lng']
+#     "#{lat},#{lng}"
+#   end
+
+#   # 緯度経度 → 自転車店検索
+#   def search_bike_shops(location)
+#     api_key = ENV.fetch('GOOGLE_MAPS_API_KEY', nil)
+#     keyword = ERB::Util.url_encode('自転車')
+
+#     url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{location}&radius=4000&type=bicycle_store&keyword=#{keyword}&language=ja&key=#{api_key}")
+#     result = JSON.parse(Net::HTTP.get(url))
+#     return [] unless result['status'] == 'OK'
+
+#     result['results'].map do |place|
+#       {
+#         name: place['name'],
+#         address: place['vicinity'],
+#         rating: place['rating'],
+#         place_id: place['place_id'],
+#         lat: place['geometry']['location']['lat'],
+#         lng: place['geometry']['location']['lng']
+#       }
+#     end
+#   end
+
+#   # Google Places API から店舗詳細取得
+#   def fetch_place_details(place_id)
+#     api_key = ENV.fetch('GOOGLE_MAPS_API_KEY', nil)
+#     url = URI("https://maps.googleapis.com/maps/api/place/details/json?place_id=#{place_id}&language=ja&key=#{api_key}")
+
+#     data = JSON.parse(Net::HTTP.get_response(url).body)
+#     data['status'] == 'OK' ? data['result'] : {}
+#   end
+
+#   # 検索結果画面から来た場合にセッション保存
+#   def store_back_to_search_session(_place_id)
+#     return unless request.referer&.include?('/shops/result')
+
+#     session[:back_to_search] = request.referer
+#   end
+# end
 
 # # frozen_string_literal: true
 

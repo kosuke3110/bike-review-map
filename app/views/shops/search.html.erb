@@ -9,6 +9,20 @@
       <%= f.label :address, "住所を入力", class: "block font-semibold" %>
       <%= f.text_field :address, class: "w-full p-2 border rounded", id: "address-input" %>
     </div>
+    <!-- キーワード検索 -->
+    <div>
+      <%= f.label :keyword, "キーワード検索", class: "block font-semibold" %>
+      <%= f.text_field :keyword, placeholder: "例: 修理 ロードバイク", class: "w-full p-2 border rounded" %>
+    </div>
+
+    <!-- 検索範囲 -->
+    <div>
+      <%= f.label :radius, "検索範囲", class: "block font-semibold" %>
+      <%= f.select :radius,
+            options_for_select([["1km", 1000], ["3km", 3000], ["5km", 5000]], selected: params[:radius]),
+            {},
+            class: "w-full p-2 border rounded" %>
+    </div>
 
     <!-- ボタンエリア -->
     <div class="flex justify-between mt-4">
