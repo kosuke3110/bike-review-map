@@ -41,7 +41,61 @@
   <% end %>
 </div>
 
-<!-- JavaScript -->
+<!-- Google Maps JS + Places API（旧） -->
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places&callback=initAutocomplete" async defer></script>
+
+<script>
+  function initAutocomplete() {
+    const addressInput = document.getElementById("address-input");
+    if (!addressInput) return;
+
+    const autocomplete = new google.maps.places.Autocomplete(addressInput, {
+      types: ["geocode"],
+      componentRestrictions: { country: "jp" }
+    });
+
+    // 候補選択時に hidden にセット
+    autocomplete.addListener("place_changed", () => {
+      const place = autocomplete.getPlace();
+      if (!place.geometry) return;
+
+      document.getElementById("lat-field").value = place.geometry.location.lat();
+      document.getElementById("lng-field").value = place.geometry.location.lng();
+
+      console.log("選択住所:", place.formatted_address);
+      console.log("緯度:", place.geometry.location.lat(), "経度:", place.geometry.location.lng());
+    });
+
+    // 入力中は hidden をリセット
+    addressInput.addEventListener("input", () => {
+      document.getElementById("lat-field").value = "";
+      document.getElementById("lng-field").value = "";
+    });
+
+    // z-index を上げて候補が隠れないように
+    const style = document.createElement("style");
+    style.innerHTML = ".pac-container { z-index: 9999 !important; }";
+    document.head.appendChild(style);
+  }
+
+  // 現在地取得
+  window.getCurrentLocation = function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          document.getElementById("lat-field").value = position.coords.latitude;
+          document.getElementById("lng-field").value = position.coords.longitude;
+          document.getElementById("search-form").submit();
+        },
+        function() { alert("位置情報の取得に失敗しました。"); }
+      );
+    } else {
+      alert("お使いのブラウザでは位置情報取得がサポートされていません。");
+    }
+  };
+</script>
+
+<!-- JavaScript
 <script>
   // 現在地を取得して緯度経度をhiddenフィールドに代入
   function getCurrentLocation() {
@@ -66,7 +120,7 @@
       document.getElementById('lng-field').value = "";
     });
   });
-</script>
+</script>-->
 
 <!-- トップに戻るリンク -->
 <div class="mt-6 text-center">
