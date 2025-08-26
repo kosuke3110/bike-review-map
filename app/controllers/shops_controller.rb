@@ -7,9 +7,6 @@ require 'erb'
 
 # Google API を利用して自転車店を取得するコントローラ
 class ShopsController < ApplicationController
-
-
-
   # 検索結果画面表示
   def result
     @shops = []
@@ -69,26 +66,26 @@ class ShopsController < ApplicationController
     "#{lat},#{lng}"
   end
 
-# 緯度経度 → 自転車店検索
-def search_bike_shops(location, keyword, radius)
-  api_key = ENV.fetch('GOOGLE_MAPS_API_KEY', nil)
-  encoded_keyword = ERB::Util.url_encode(keyword)
+  # 緯度経度 → 自転車店検索
+  def search_bike_shops(location, keyword, radius)
+    api_key = ENV.fetch('GOOGLE_MAPS_API_KEY', nil)
+    encoded_keyword = ERB::Util.url_encode(keyword)
 
-  url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{location}&radius=#{radius}&type=bicycle_store&keyword=#{encoded_keyword}&language=ja&key=#{api_key}")
-  result = JSON.parse(Net::HTTP.get(url))
-  return [] unless result['status'] == 'OK'
+    url = URI("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{location}&radius=#{radius}&type=bicycle_store&keyword=#{encoded_keyword}&language=ja&key=#{api_key}")
+    result = JSON.parse(Net::HTTP.get(url))
+    return [] unless result['status'] == 'OK'
 
-  result['results'].map do |place|
-    {
-      name: place['name'],
-      address: place['vicinity'],
-      rating: place['rating'],
-      place_id: place['place_id'],
-      lat: place['geometry']['location']['lat'],
-      lng: place['geometry']['location']['lng']
-    }
+    result['results'].map do |place|
+      {
+        name: place['name'],
+        address: place['vicinity'],
+        rating: place['rating'],
+        place_id: place['place_id'],
+        lat: place['geometry']['location']['lat'],
+        lng: place['geometry']['location']['lng']
+      }
+    end
   end
-end
 
   # Google Places API から店舗詳細取得
   def fetch_place_details(place_id)
@@ -116,8 +113,6 @@ end
 
 # # Google API を利用して自転車店を取得するコントローラ
 # class ShopsController < ApplicationController
-
-
 
 #   # 検索結果画面表示
 #   def result
