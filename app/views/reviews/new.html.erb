@@ -1,42 +1,44 @@
-<%= form_with model: @review, local: true do |f| %>
-  <%= f.hidden_field :shop_place_id %>
+<div class="max-w-3xl mx-auto px-4">
+  <%= form_with model: @review, local: true do |f| %>
+    <%= f.hidden_field :shop_place_id %>
 
-  <div class="mb-4">
-    <%= f.label :rating_overall, "総合評価", class: "block font-semibold" %>
-    <%= f.select :rating_overall, options_for_select([5, 4, 3, 2, 1].map { |n| ["#{n}点", n] }), {}, class: "border rounded w-full p-2" %>
-  </div>
+    <div class="mb-4">
+      <%= f.label :rating_overall, "総合評価", class: "block font-semibold" %>
+      <%= f.select :rating_overall, options_for_select([5, 4, 3, 2, 1].map { |n| ["#{n}点", n] }), {}, class: "border rounded w-full p-2" %>
+    </div>
 
-  <div class="mb-4">
-    <%= f.label :rating_skill, "技術評価", class: "block font-semibold" %>
-    <%= f.select :rating_skill, options_for_select([5, 4, 3, 2, 1].map { |n| ["#{n}点", n] }), {}, class: "border rounded w-full p-2" %>
-  </div>
+    <div class="mb-4">
+      <%= f.label :rating_skill, "技術評価", class: "block font-semibold" %>
+      <%= f.select :rating_skill, options_for_select([5, 4, 3, 2, 1].map { |n| ["#{n}点", n] }), {}, class: "border rounded w-full p-2" %>
+    </div>
 
-  <div class="mb-4">
-    <%= f.label :rating_service, "サービス評価", class: "block font-semibold" %>
-    <%= f.select :rating_service, options_for_select([5, 4, 3, 2, 1].map { |n| ["#{n}点", n] }), {}, class: "border rounded w-full p-2" %>
-  </div>
+    <div class="mb-4">
+      <%= f.label :rating_service, "サービス評価", class: "block font-semibold" %>
+      <%= f.select :rating_service, options_for_select([5, 4, 3, 2, 1].map { |n| ["#{n}点", n] }), {}, class: "border rounded w-full p-2" %>
+    </div>
 
-  <div class="mb-4">
-    <%= f.label :rating_price, "価格評価", class: "block font-semibold" %>
-    <%= f.select :rating_price, options_for_select([5, 4, 3, 2, 1].map { |n| ["#{n}点", n] }), {}, class: "border rounded w-full p-2" %>
-  </div>
+    <div class="mb-4">
+      <%= f.label :rating_price, "価格評価", class: "block font-semibold" %>
+      <%= f.select :rating_price, options_for_select([5, 4, 3, 2, 1].map { |n| ["#{n}点", n] }), {}, class: "border rounded w-full p-2" %>
+    </div>
 
-  <div class="mb-4">
-    <%= f.label :comment, "コメント", class: "block font-semibold" %>
-    <%= f.text_area :comment, rows: 4, class: "border rounded w-full p-2" %>
-  </div>
+    <div class="mb-4">
+      <%= f.label :comment, "コメント", class: "block font-semibold" %>
+      <%= f.text_area :comment, rows: 4, class: "border rounded w-full p-2" %>
+    </div>
 
-  <div class="mb-4">
-    <p class="font-semibold">タグ（複数選択可）:</p>
-    <% Tag.all.each do |tag| %>
-      <label class="block">
-        <%= check_box_tag "review[tag_ids][]", tag.id, @review.tags.include?(tag), id: "tag_#{tag.id}" %>
-        <%= label_tag "tag_#{tag.id}", tag.name %>
-      </label>
-    <% end %>
-  </div>
+    <div class="mb-4">
+      <p class="font-semibold">タグ（複数選択可）:</p>
+      <% Tag.all.each do |tag| %>
+        <label class="block">
+          <%= check_box_tag "review[tag_ids][]", tag.id, @review.tags.include?(tag), id: "tag_#{tag.id}" %>
+          <%= label_tag "tag_#{tag.id}", tag.name %>
+        </label>
+      <% end %>
+    </div>
 
-  <div>
-    <%= f.submit "レビューを投稿する", class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
-  </div>
-<% end %>
+    <div>
+      <%= f.submit "レビューを投稿する", class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+    </div>
+  <% end %>
+</div>

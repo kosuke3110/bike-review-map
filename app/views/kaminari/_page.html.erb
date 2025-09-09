@@ -1,0 +1,19 @@
+<%# Link showing page number
+  - available local variables
+    page:          a page object for "this" page
+    url:           url to this page
+    current_page:  a page object for the currently displayed page
+    total_pages:   total number of pages
+    per_page:      number of items to fetch per page
+    remote:        data-remote
+-%>
+
+<% if page.current? %>
+  <!-- 現在ページ -->
+  <span class="px-4 py-2 border border-blue-600 bg-blue-600 text-white rounded-lg font-semibold shadow-md transform scale-105">
+    <%= page %>
+  </span>
+<% else %>
+  <!-- 他のページ -->
+  <%= link_to page, url, class: "px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-blue-100 hover:border-blue-300 hover:text-blue-600 transition duration-200 ease-in-out shadow-sm" %>
+<% end %>
