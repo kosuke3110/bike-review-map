@@ -40,8 +40,10 @@
         <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { turbo: false, confirm: 'ログアウトしますか？' }, class: "hover:underline" %>
       <% else %>
         <%= link_to '新規登録', new_user_registration_path, class: "hover:underline" %>
-        <%= link_to 'ログイン', new_user_session_path, class: "hover:underline" %>
-      <% end %>
+        <%= link_to 'ログイン',
+            new_user_session_path(redirect_to: request.path),
+            class: "hover:underline" %>
+        <% end %>
       </nav>
     </header>
 

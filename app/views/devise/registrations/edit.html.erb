@@ -38,16 +38,16 @@
       <%= f.password_field :current_password, autocomplete: "current-password", class: "border rounded w-full px-3 py-2" %>
     </div>
 
-    <div>
+    <div class='mb-3'>
       <%= f.submit "更新する", class: "bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition" %>
     </div>
   <% end %>
 
-  <div class="mt-6">
-    <%= link_to "戻る", :back, class: "text-blue-600 hover:underline" %>
+  <div class>
+    <%= link_to 'トップに戻る', root_path,
+      class: "px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 font-semibold hover:bg-gray-200 transition" %>
   </div>
 </div>
-
 
   <!--　初期
   <h2>Edit <%= resource_name.to_s.humanize %></h2>
