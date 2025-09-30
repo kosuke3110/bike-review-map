@@ -1,6 +1,6 @@
 <h2 class="text-2xl font-bold text-center mb-8 mt-6">ログイン</h2>
 
-<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md mb-6">
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "" }) do |f| %>
 
@@ -30,14 +30,13 @@
       <%= f.submit "ログイン", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-full transition duration-300" %>
     </div>
   <% end %>
+</div>
 
-  <!-- Googleログインボタンを中央揃え
-  <div class="flex justify-center">
-    <%= button_to user_google_oauth2_omniauth_authorize_path, method: :post, form: { data: { turbo: false } }, class: "flex items-center border border-gray-300 rounded px-4 py-2 hover:bg-gray-100 transition" do %>
-      <%= image_tag "google-logo.png", alt: "Googleのロゴ", class: "w-6 h-6 mr-3" %>
-      <span class="font-semibold text-gray-700">Googleでログイン</span>
-    <% end %>
-  </div> -->
+
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+  <p class="text-gray-600 font-semibold mb-4 text-center">他のアカウントでログインする</p>
+
+  <!-- Googleログインボタン -->
   <div class="flex justify-center">
     <%= button_to user_google_oauth2_omniauth_authorize_path,
                   method: :post,
@@ -50,11 +49,9 @@
   </div>
 </div>
 
-
-<div class="text-center mt-6 text-sm text-gray-600 max-w-md mx-auto">
+<div class="flex justify-center space-x-4 text-sm mt-4">
   <%= render "devise/shared/links" %>
-  <div class="mt-2">
-    <%= link_to 'topに戻る', root_path, class: "text-blue-600 hover:underline" %>
-  </div>
-</div>
 
+  <%= link_to 'トップに戻る', root_path,
+      class: "px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 font-semibold hover:bg-gray-200 transition" %>
+</div>

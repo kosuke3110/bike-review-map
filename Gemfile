@@ -97,3 +97,5 @@ gem 'omniauth-rails_csrf_protection'
 
 # ページング
 gem 'kaminari'
+
+gem 'tailwindcss-rails'

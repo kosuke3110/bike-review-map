@@ -36,10 +36,25 @@
   </div>
 <% end %>
 
-<div class="text-center mt-4 text-sm">
-  <%= render "devise/shared/links" %>
-  <div>
-    <%= link_to 'topに戻る', root_path, class: "text-blue-600 hover:underline" %>
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md mt-6">
+  <p class="text-gray-600 font-semibold mb-4 text-center">他のアカウントでログインする</p>
+
+  <!-- Googleログインボタン -->
+  <div class="flex justify-center">
+    <%= button_to user_google_oauth2_omniauth_authorize_path,
+                  method: :post,
+                  form: { data: { turbo: false } },
+                  class: "p-0 border-none bg-transparent hover:opacity-90 transition" do %>
+      <%= image_tag "google-logo.png",
+                    alt: "Googleでサインアップ",
+                    class: "h-12 w-auto" %>
+    <% end %>
   </div>
 </div>
 
+<div class="flex justify-center space-x-4 text-sm mt-4 ">
+  <%= render "devise/shared/links" %>
+
+  <%= link_to 'トップに戻る', root_path,
+      class: "px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 font-semibold hover:bg-gray-200 transition" %>
+</div>
