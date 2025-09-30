@@ -21,7 +21,7 @@
 #   end
 # end
 
-#resultに戻す
+# resultに戻す
 # class ApplicationController < ActionController::Base
 #   before_action :store_user_location!, if: :storable_location?
 #   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -61,19 +61,20 @@
 #   end
 # end
 
+# ApplicationController
 class ApplicationController < ActionController::Base
   before_action :store_user_location!, if: :storable_location?
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
 
-  def after_sign_in_path_for(resource)
+  def after_sign_in_path_for(_resource)
     if params[:redirect_to].present?
       decoded = CGI.unescape(params[:redirect_to].to_s)
       # /users/sign_in が混ざっていたら無視
       return decoded unless decoded.start_with?(new_user_session_path)
     end
-    
+
     safe_redirect_path || root_path
   end
 
@@ -89,9 +90,9 @@ class ApplicationController < ActionController::Base
     return stored_location if stored_location.present?
 
     referer = request.referer
-    if referer.present? && !referer.include?(new_user_session_path)
-      referer
-    end
+    return unless referer.present? && !referer.include?(new_user_session_path)
+
+    referer
   end
 
   def storable_location?
@@ -102,5 +103,3 @@ class ApplicationController < ActionController::Base
     store_location_for(:user, request.fullpath)
   end
 end
-
-
