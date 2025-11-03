@@ -42,12 +42,17 @@ Googleマップで探すこともできますが、「自転車専門かどう�
 - **店舗検索**
   - 住所入力または現在地取得
   - 検索結果をリスト上で表示
+  [![Image from Gyazo](https://i.gyazo.com/2d2d090d704070ae55d4fc0f2b0f4dc9.gif)](https://gyazo.com/2d2d090d704070ae55d4fc0f2b0f4dc9)
 - **店舗詳細**
   - ユーザー投稿レビュー（タグ付き）
   - Google レビュー表示
+  [![Image from Gyazo](https://i.gyazo.com/572ac2adb76058631e3f6c34cb9a717c.gif)](https://gyazo.com/572ac2adb76058631e3f6c34cb9a717c)
 - **レビュー投稿**
+  - ログインが必要
   - 総合・技術・接客・金額の星評価
   - タグ付け機能（例：スポーツ自転車のみ対応、即日修理可）
+  [![Image from Gyazo](https://i.gyazo.com/aae644f67a19b9f1a4b4b077e123bafb.gif)](https://gyazo.com/aae644f67a19b9f1a4b4b077e123bafb)
+
 - **ユーザー管理**
   - Devise による認証
   - プロフィール閲覧・編集
