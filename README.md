@@ -1,4 +1,87 @@
-# README
+# Bike Review Map
+
+## 目次
+
+- [サービス概要](#サービス概要)
+- [サービスURL](#サービスurl)
+- [サービス開発の背景](#サービス開発の背景)
+- [機能紹介](#機能紹介)
+- [技術構成](#技術構成)
+  - [使用技術](#使用技術)
+  - [ER図](#er図)
+  - [画面遷移図](#画面遷移図)
+---
+
+## サービス概要
+
+自転車が趣味で旅先や出先でパンクや整備が必要になる場面が多く、土地勘のない場所で信頼できる店舗を探すのに苦労した経験がきっかけです。
+Googleマップで探すこともできますが、「自転車専門かどうか」「対応の丁寧さ」などの判断材料が乏しく、レビューの質にばらつきがあることが課題でした。
+同じように自転車に乗る人たちのリアルな口コミや体験談を共有できる場所を作りたいという思いから、このサービスを立ち上げました。
+
+---
+
+## サービスURL
+
+- [BIKE REVIEW MAP アプリ](https://bike-review-map.fly.dev/)
+
+---
+
+## サービス開発の背景
+
+自転車が趣味で旅先や出先でパンクや整備が必要になる場面が多く、土地勘のない場所で信頼できる店舗を探すのに苦労した経験がきっかけです。
+
+Googleマップで探すこともできますが、「自転車専門かどうか」「対応の丁寧さ」などの判断材料が乏しく、レビューの質にばらつきがあることが課題でした。
+
+同じように自転車に乗る人たちのリアルな口コミや体験談を共有できる場所を作りたいという思いから、このサービスを立ち上げました。
+
+
+---
+
+## 機能紹介
+
+- **店舗検索**
+  - 住所入力または現在地取得
+  - 検索結果をリスト上で表示
+- **店舗詳細**
+  - ユーザー投稿レビュー（タグ付き）
+  - Google レビュー表示
+- **レビュー投稿**
+  - 総合・技術・接客・金額の星評価
+  - タグ付け機能（例：スポーツ自転車のみ対応、即日修理可）
+- **ユーザー管理**
+  - Devise による認証
+  - プロフィール閲覧・編集
+
+---
+
+## 技術構成
+
+アプリ全体は MVC 構造に基づき、以下のレイヤーで構成されています。
+
+### 使用技術
+
+| 分類 | 技術 |
+|------|------|
+| バックエンド | Ruby on Rails 7.1.3 |
+| フロントエンド | Hotwire (Turbo + Stimulus), Tailwind CSS |
+| データベース | PostgreSQL |
+| 外部 API | Google Maps API, Places API |
+| 認証 | Devise |
+| コンテナ | Docker |
+| アプリケーションサーバー | Fly.io |
+| バージョン管理ツール | GitHub・Git Flow |
+
+### ER図
+
+[![Image from Gyazo](https://i.gyazo.com/4d413fb6d8aa1a8eec449282e6a860ca.png)](https://gyazo.com/4d413fb6d8aa1a8eec449282e6a860ca)
+
+
+### 画面遷移図
+- [画面遷移図](https://www.figma.com/design/1zSAEAHLbT2t7YmMSZzw8A/%E8%87%AA%E8%BB%A2%E8%BB%8A%E5%BA%97%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E3%82%A2%E3%83%97%E3%83%AA?node-id=1-19&p=f&t=12sVQ1uUesx5Zwrf-0)
+
+
+
+<!--# README
 # 🚲 自転車店レビューアプリ（名称：bike review map）
 
 ## ■ サービス概要（3行で説明）
@@ -123,7 +206,7 @@ https://i.gyazo.com/4d413fb6d8aa1a8eec449282e6a860ca.png
 
 
 
-<!-- This README would normally document whatever steps are necessary to get the
+ This README would normally document whatever steps are necessary to get the
 application up and running.
 
 Things you may want to cover:
